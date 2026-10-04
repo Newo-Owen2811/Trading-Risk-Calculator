@@ -7,10 +7,10 @@ O = "\033[38;5;208m"
 R = "\033[91m"       
 CR = "\033[0m"        
 
-def get_number_input(prompt_text):
+def gni(pro):
     while True:
         try:
-            return float(input(prompt_text))
+            return float(input(pro))
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
@@ -36,8 +36,8 @@ while True:
         input("\nPress Enter to continue...")
         continue
 
-    capital = get_number_input("\nEnter your total account balance ($): ")
-    risk_percentage = get_number_input("Enter the percentage you want to risk (%): ")
+    capital = gni("\nEnter your total account balance ($): ")
+    risk_percentage = gni("Enter the percentage you want to risk (%): ")
 
     #Math
     car = capital * (risk_percentage / 100)
