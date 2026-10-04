@@ -48,3 +48,4 @@ while True:
     print(f"-> Consecutive losses to wipe out your account: {int(lstba)}")
 
     input("\nPress Enter to return to the menu...")
+#To be continued
