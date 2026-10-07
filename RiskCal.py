@@ -7,6 +7,7 @@ O = "\033[38;5;208m"
 R = "\033[91m"       
 CR = "\033[0m"        
 
+
 def gni(pro):
     while True:
         try:
@@ -24,13 +25,24 @@ while True:
     print(f"   {R}> 10%  Extreme{CR}")
     print("----------------------------")
     print("1. Calculate Risk")
-    print("2. Exit")
+    print("2. Calculate Chances ")
+    print("3. Exit")
     
     choice = input("\nSelect an option: ")
 
-    if choice == "2":
+    if choice == "3":
         print("\nGoodbye!")
         break
+    elif choice == "2":
+       rr = gni("Enter your Risk-to-Reward ratio (e.g., 1.5 for 1:1.5): ")
+       wr = gni("Enter your historical win rate (%): ")
+       ls = gni("Enter the target consecutive loss streak to evaluate: ")
+       lr = (100 - wr) / 100
+       chance = lr ** ls
+       percent = chance * 100
+       print(f"\n-> Estimated probability of experiencing {int(ls)} consecutive losses: {percent:.2f}%")
+       input("\nPress Enter to return to the main menu...")
+
     elif choice != "1":
         print("Invalid choice. Please try again.")
         input("\nPress Enter to continue...")
@@ -38,7 +50,7 @@ while True:
 
     capital = gni("\nEnter your total account balance ($): ")
     risk_percentage = gni("Enter the percentage you want to risk (%): ")
-
+    
     #Math
     car = capital * (risk_percentage / 100)
     lstba = capital / car
@@ -49,3 +61,5 @@ while True:
 
     input("\nPress Enter to return to the menu...")
 #To be continued
+
+
