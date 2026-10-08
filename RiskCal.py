@@ -1,5 +1,5 @@
 import os
-
+import random
 # Color code
 G = "\033[92m"       
 Y = "\033[93m"       
@@ -7,6 +7,16 @@ O = "\033[38;5;208m"
 R = "\033[91m"       
 CR = "\033[0m"        
 
+def simulation(p, rounds):
+    win = 0
+    sim = p / 100
+    for _ in range(rounds):
+        x = random.random()
+        if x <= sim:
+            win += 1
+    ar = (win / rounds) * 100 if rounds > 0 else 0
+    
+    return f"You won {win} out of {rounds} times! ({ar:.2f}% actual win rate)"
 
 def gni(pro):
     while True:
@@ -14,7 +24,6 @@ def gni(pro):
             return float(input(pro))
         except ValueError:
             print("Invalid input. Please enter a valid number.")
-
 while True:
     os.system('cls' if os.name == 'nt' else 'clear')
     
@@ -26,40 +35,58 @@ while True:
     print("----------------------------")
     print("1. Calculate Risk")
     print("2. Calculate Chances ")
-    print("3. Exit")
+    print("3. Simulation")
+    print("4. Exit")
     
     choice = input("\nSelect an option: ")
 
-    if choice == "3":
+    if choice == "1":
+        capital = gni("\nEnter your total account balance ($): ")
+        risk_percentage = gni("Enter the percentage you want to risk (%): ")
+        
+        
+        car = capital * (risk_percentage / 100)
+        lstba = capital / car
+
+        
+        print(f"\n-> Cash amount at risk per trade: ${car:,.2f}")
+        print(f"-> Consecutive losses to wipe out your account: {int(lstba)}")
+
+        input("\nPress Enter to return to the menu...")
+
+    elif choice == "2":
+        rr = gni("Enter your Risk-to-Reward ratio (e.g., 1.5 for 1:1.5): ")
+        wr = gni("Enter your historical win rate (%): ")
+        ls = gni("Enter the target consecutive loss streak to evaluate: ")
+        lr = (100 - wr) / 100
+        chance = lr ** ls
+        percent = chance * 100
+        print(f"\n-> Estimated probability of experiencing {int(ls)} consecutive losses: {percent:.2f}%")
+        input("\nPress Enter to return to the main menu...")
+
+    elif choice == "3":
+        while True:
+            try:
+                winrate = float(input("Enter winrate: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+
+        while True:
+            try:
+                rounds = int(input("Enter rounds: "))
+                break
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+
+        result = simulation(winrate, rounds)
+        print(f"\n-> {result}")
+        input("\nPress Enter to return to the main menu...")
+
+    elif choice == "4":
         print("\nGoodbye!")
         break
-    elif choice == "2":
-       rr = gni("Enter your Risk-to-Reward ratio (e.g., 1.5 for 1:1.5): ")
-       wr = gni("Enter your historical win rate (%): ")
-       ls = gni("Enter the target consecutive loss streak to evaluate: ")
-       lr = (100 - wr) / 100
-       chance = lr ** ls
-       percent = chance * 100
-       print(f"\n-> Estimated probability of experiencing {int(ls)} consecutive losses: {percent:.2f}%")
-       input("\nPress Enter to return to the main menu...")
 
-    elif choice != "1":
+    else:
         print("Invalid choice. Please try again.")
         input("\nPress Enter to continue...")
-        continue
-
-    capital = gni("\nEnter your total account balance ($): ")
-    risk_percentage = gni("Enter the percentage you want to risk (%): ")
-    
-    #Math
-    car = capital * (risk_percentage / 100)
-    lstba = capital / car
-
-    # results
-    print(f"\n-> Cash amount at risk per trade: ${car:,.2f}")
-    print(f"-> Consecutive losses to wipe out your account: {int(lstba)}")
-
-    input("\nPress Enter to return to the menu...")
-#To be continued
-
-
